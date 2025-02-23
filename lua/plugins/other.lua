@@ -1,0 +1,16 @@
+return {
+  {
+    'folke/which-key.nvim',
+  },
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = true,
+    opts = {},
+  },
+  {
+    'tpope/vim-dadbod',
+    'kristijanhusak/vim-dadbod-completion',
+    'kristijanhusak/vim-dadbod-ui',
+  },
+}
