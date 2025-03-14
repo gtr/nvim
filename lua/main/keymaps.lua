@@ -10,6 +10,7 @@ local opts = { noremap = true, silent = true }
 
 -- Save file
 vim.keymap.set("n", "<C-s>", "<cmd> w <CR>", opts)
+vim.keymap.set("i", "<C-s>", "<esc><cmd> w <CR>", opts)
 
 -- Quit file
 vim.keymap.set("n", "<C-q>", "<cmd> q <CR>", opts)
@@ -45,3 +46,6 @@ vim.keymap.set("n", "<M-[>", "<cmd>vertical resize -2<CR>", { desc = "Decrease w
 -- Swap lines
 vim.keymap.set('n', '<A-j>', ':m .+1<CR>==', { silent = true, noremap = true })
 vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', { silent = true, noremap = true })
+
+-- Format line width to 120 characters
+vim.keymap.set('n', '<leader>f', '<cmd> :set textwidth=120 <CR> ggVGgq')

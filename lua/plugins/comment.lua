@@ -18,5 +18,19 @@ return {
       "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>",
       opts
     )
+    vim.keymap.set("i", "<C-/>", require("Comment.api").toggle.linewise.current, opts)
+    vim.keymap.set("i", "<C-/>", require("Comment.api").toggle.linewise.current, opts)
+    vim.keymap.set(
+      "i",
+      "<C-/>",
+      "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>",
+      opts
+    )
+    vim.keymap.set(
+      "i",
+      "<C-_>",
+      "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>",
+      opts
+    )
   end,
 }

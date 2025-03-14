@@ -40,7 +40,7 @@ vim.opt.shortmess:append 'c'                         -- Don't give |ins-completi
 vim.opt.iskeyword:append '-'                         -- Hyphenated words recognized by searches (default: does not include '-')
 vim.opt.formatoptions:remove { 'c', 'r', 'o' }       -- Don't insert the current comment leader automatically for auto-wrapping comments using 'textwidth', hitting <Enter> in insert mode, or hitting 'o' or 'O' in normal mode. (default: 'croql')
 vim.opt.runtimepath:remove '/usr/share/vim/vimfiles' -- Separate Vim plugins from Neovim in case Vim still in use (default: includes this path if Vim is installed)
-
+vim.opt.scrolloff = 10                               -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
@@ -54,5 +54,7 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   end,
 })
 
--- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+
+-- Disable formatting in markdown code blocks
+vim.g.vim_markdown_conceal = 0
+vim.g.vim_markdown_conceal_code_blocks = 0

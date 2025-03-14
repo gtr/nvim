@@ -6,13 +6,17 @@ local colors = {
   dark = {
     bg = '#000000',
     fg = '#FFFFFF',
-    red = '#d47780',
-    green = '#8DC48E',
-    blue = '#80afd9',
+    -- red = '#d47780',
+    red = '#D9669A',
+    green = '#9BBF8C',
+    -- blue = '#95BDDF',
+    blue = '#99C9D2',
     yellow = '#e0dca4',
     purple = '#c5a1d6',
-    orange = '#d9ae80',
+    lavender = '#A6ABF2',
+    orange = '#FAC351',
     comment = '#8c8785',
+    ether = '#63605e',
     white = '#E8E3E3',
     brown = '#8c8785',
     vcs = {
@@ -30,9 +34,11 @@ local colors = {
     blue = '#2C84BC',
     yellow = '#50a14f',
     purple = '#A626A4',
-    orange = '#cc9547',
+    lavender = '#A6ABF2',
+    orange = '#FAC351',
     comment = '#a0a1a7',
     brown = '#a0a1a7',
+    ether = '#e3e3e3',
     cursorLine = '#e3e3e3',
     vcs = {
       added = '#50a14f',
@@ -70,53 +76,70 @@ function M.setup(opts)
     Function = { fg = theme.yellow },
     Statement = { fg = theme.red },
     Keyword = { fg = theme.red },
-    Type = { fg = theme.orange },
+    Type = { fg = theme.lavender },
     Special = { fg = theme.fg },
-    Boolean = { fg = theme.orange },
+    Boolean = { fg = theme.lavender },
     LineNr = { fg = theme.brown },
     CursorLine = { bg = theme.cursorLine },
-    CursorLineNr = { fg = theme.purple, bold = true, underline = true },
-    EndOfBuffer = { fg = theme.purple },
-    Directory = { fg = theme.purple },
-    Title = { fg = theme.purple },
+    CursorLineNr = { fg = theme.orange, bold = true, underline = true },
+    EndOfBuffer = { fg = theme.lavender },
+    Directory = { fg = theme.lavender },
+    Title = { fg = theme.lavender },
+    TodoFgTODO = { fg = theme.lavender },
 
     -- Treesitter groups
     ['@function'] = { fg = theme.purple },
-    ['@function.builtin'] = { fg = theme.orange },
+    ['@function.builtin'] = { fg = theme.lavender },
     ['@keyword'] = { fg = theme.red },
     ['@string'] = { fg = theme.yellow },
     ['@variable'] = { fg = theme.white },
 
     -- Python
-    ['@constant.builtin.python'] = { fg = theme.orange },
-    ['@constructor.python'] = { fg = theme.orange },
+    ['@attribute.python'] = { fg = theme.red },
+    ['@constant.builtin.python'] = { fg = theme.lavender },
+    ['@constant.python'] = { fg = theme.blue },
+    ['@constructor.python'] = { fg = theme.lavender },
     ['@function.builtin.python'] = { fg = theme.purple },
-    ['@type.python'] = { fg = theme.orange },
     ['@keyword.operator.python'] = { fg = theme.red },
     ['@keyword.return.python'] = { fg = theme.red },
-    ['@variable.parameter.python'] = { fg = theme.blue },
-    ['@type.builtin.python'] = { fg = theme.orange },
     ['@keyword.conditional.python'] = { fg = theme.red },
-    ['@operator.python'] = { fg = theme.red },
     ['@number.python'] = { fg = theme.green },
-    ['@constant.python'] = { fg = theme.blue },
     ['@number.float.python'] = { fg = theme.green },
-    ['@attribute.python'] = { fg = theme.red },
-
+    ['@operator.python'] = { fg = theme.red },
     ['@punctuation.bracket'] = { fg = theme.brown },
-    ['@constructor.special.lua'] = { fg = theme.brown },
-    ['@punctuation.special.python'] = { fg = theme.brown },
     ['@punctuation.comma'] = { fg = theme.brown },
     ['@punctuation.bracket.python'] = { fg = theme.brown },
     ['@punctuation.delimiter.python'] = { fg = theme.brown },
+    ['@punctuation.special.python'] = { fg = theme.brown },
+    ['@type.builtin.python'] = { fg = theme.lavender },
+    ['@type.python'] = { fg = theme.lavender },
+    ['@variable.member.python'] = { fg = theme.blue },
+    ['@variable.parameter.python'] = { fg = theme.blue },
+
+    -- Lua
+    ['@constructor.special.lua'] = { fg = theme.brown },
+
+    -- JSON
+    ['@number.json'] = { fg = theme.green },
+    ['@constant.builtin.json'] = { fg = theme.red },
 
     -- Markdown
-    ['@markup.heading.1.markdown'] = { fg = theme.purple, bold = true },
-    ['@markup.heading.2.markdown'] = { fg = theme.purple, bold = true },
-    ['@markup.heading.3.markdown'] = { fg = theme.purple, bold = true },
-    ['@markup.heading.4.markdown'] = { fg = theme.purple, bold = true },
-    ['@markup.strong'] = { fg = theme.blue },
+    ['@markup.heading.1.markdown'] = { fg = theme.lavender, bold = true },
+    ['@markup.heading.2.markdown'] = { fg = theme.lavender, bold = true },
+    ['@markup.heading.3.markdown'] = { fg = theme.lavender, bold = true },
+    ['@markup.heading.4.markdown'] = { fg = theme.lavender, bold = true },
+    ['@markup.strong'] = { fg = theme.blue, bold = true },
+    ['@markup.italic'] = { fg = theme.yellow, italic = true },
     ['@markup.raw.markdown_inline'] = { fg = theme.red },
+    ['@markup.quote.markdown'] = { fg = theme.comment },
+    ['@markup.list.markdown'] = { fg = theme.green },
+    ['@label.markdown'] = { fg = theme.comment },
+    ['@punctuation.special.markdown'] = { fg = theme.comment },
+
+    -- Zig
+    ['@constant.builtin.zig'] = { fg = theme.lavender },
+    ['@type.builtin.zig'] = { fg = theme.lavender },
+    ['@operator.zig'] = { fg = theme.red },
 
     -- Telescope
     TelescopeBorder = { fg = theme.fg },
@@ -128,9 +151,6 @@ function M.setup(opts)
     DiffAdd = { fg = theme.vcs.added },
     DiffChange = { fg = theme.vcs.changed },
     DiffDelete = { fg = theme.vcs.removed },
-
-    -- Indent blank line
-    IblIndent = { fg = theme.comment },
 
     -- Gitsigns plugin specific
     GitSignsAdd = { fg = theme.vcs.added },
@@ -158,6 +178,13 @@ function M.setup(opts)
     AlphaHeader = { fg = theme.fg, bg = theme.fg },
     AlphaButtons = { fg = theme.blue },
     AlphaFooter = { fg = theme.comment },
+
+    -- Indent blank line
+    IblIndent = { fg = theme.ether },
+
+    -- Borders
+    WinSeparator = { fg = theme.comment },
+    VertSplit = { fg = theme.comment },
   }
 
   -- Apply highlights

@@ -22,10 +22,10 @@ require("lazy").setup({
   require("plugins.tmux"),
   require("plugins.flash"),
   require("plugins.comment"),
-  require("plugins.python"),
   require("plugins.conform"),
   require("plugins.treesitter"),
+  require("plugins.surround"),
   require("plugins.indent-blankline"),
   require("plugins.other"),
-  require("plugins.yazi"),
+  require("plugins.noice"),
 })
