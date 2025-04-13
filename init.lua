@@ -16,6 +16,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   require("plugins.gitsigns"),
   require("plugins.autocomplete"),
+  require("plugins.barbecue"),
   require("plugins.lsp"),
   require("plugins.telescope"),
   require("plugins.alpha"),
@@ -28,4 +29,5 @@ require("lazy").setup({
   require("plugins.indent-blankline"),
   require("plugins.other"),
   require("plugins.noice"),
+  require("plugins.oil"),
 })

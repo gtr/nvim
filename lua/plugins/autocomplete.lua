@@ -92,7 +92,7 @@ return { -- Autocompletion
         -- Accept ([y]es) the completion.
         --  This will auto-import if your LSP supports it.
         --  This will expand snippets if the LSP sent a snippet.
-        ['<C-y>'] = cmp.mapping.confirm { select = true },
+        ['<C-CR>'] = cmp.mapping.confirm { select = true },
 
         -- If you prefer more traditional completion keymaps,
         -- you can uncomment the following lines
@@ -123,6 +123,15 @@ return { -- Autocompletion
             luasnip.jump(-1)
           end
         end, { 'i', 's' }),
+
+        -- This will exit to normal mode when menu is not visible
+        ['<Esc>'] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.abort()
+          else
+            fallback()
+          end
+        end, { 'i' }),
 
         -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
         --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps

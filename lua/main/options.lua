@@ -21,7 +21,6 @@ vim.o.whichwrap =
 vim.o.numberwidth = 4                                -- Set number column width to 2 {default 4} (default: 4)
 vim.o.swapfile = false                               -- Creates a swapfile (default: true)
 vim.o.smartindent = true                             -- Make indenting smarter again (default: false)
-vim.o.showtabline = 2                                -- Always show tabs (default: 1)
 vim.o.backspace = 'indent,eol,start'                 -- Allow backspace on (default: 'indent,eol,start')
 vim.o.pumheight = 10                                 -- Pop up menu height (default: 0)
 vim.o.conceallevel = 0                               -- So that `` is visible in markdown files (default: 1)
@@ -40,9 +39,10 @@ vim.opt.shortmess:append 'c'                         -- Don't give |ins-completi
 vim.opt.iskeyword:append '-'                         -- Hyphenated words recognized by searches (default: does not include '-')
 vim.opt.formatoptions:remove { 'c', 'r', 'o' }       -- Don't insert the current comment leader automatically for auto-wrapping comments using 'textwidth', hitting <Enter> in insert mode, or hitting 'o' or 'O' in normal mode. (default: 'croql')
 vim.opt.runtimepath:remove '/usr/share/vim/vimfiles' -- Separate Vim plugins from Neovim in case Vim still in use (default: includes this path if Vim is installed)
-vim.opt.scrolloff = 10                               -- Minimal number of screen lines to keep above and below the cursor.
+vim.opt.scrolloff = 6                                -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.wo.relativenumber = true
 
 -- Remember where we left off
 vim.api.nvim_create_autocmd('BufReadPost', {

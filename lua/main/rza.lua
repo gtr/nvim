@@ -116,6 +116,10 @@ function M.setup(opts)
     ['@variable.member.python'] = { fg = theme.blue },
     ['@variable.parameter.python'] = { fg = theme.blue },
 
+    -- Rust
+    ['@type.builtin.rust'] = { fg = theme.lavender },
+    ['@operator.rust'] = { fg = theme.red },
+
     -- Lua
     ['@constructor.special.lua'] = { fg = theme.brown },
 
@@ -159,20 +163,6 @@ function M.setup(opts)
     SignAdd = { fg = theme.vcs.added, bg = theme.bg },
     SignChange = { fg = theme.vcs.changed, bg = theme.bg },
     SignDelete = { fg = theme.vcs.removed, bg = theme.bg },
-
-    -- Mini.statusline highlight groups
-    MiiniStatuslineModeNormal = { fg = theme.fg, bg = theme.bg, bold = false },
-    MiniStatuslineModeInsert = { fg = theme.green, bg = theme.bg, bold = true },
-    MiniStatuslineModeVisual = { fg = theme.purple, bg = theme.bg, bold = true },
-    MiniStatuslineModeReplace = { fg = theme.red, bg = theme.bg, bold = true },
-    MiniStatuslineModeCommand = { fg = theme.yellow, bg = theme.bg, bold = true },
-    MiniStatuslineModeOther = { fg = theme.cyan, bg = theme.bg, bold = true },
-
-    MiniStatuslineDevinfo = { fg = theme.fg, bg = theme.bg },      -- Git branch, file info
-    MiniStatuslineFilename = { fg = theme.cyan, bg = theme.bg },   -- Current filename
-    MiniStatuslineFileinfo = { fg = theme.yellow, bg = theme.bg }, -- File encoding, type
-    MiniStatuslineInactive = { fg = theme.fg_dim, bg = theme.bg }, -- Inactive window statusline
-    MiniStatuslineRuler = { fg = theme.green, bg = theme.bg },
 
     -- Alpha
     AlphaHeader = { fg = theme.fg, bg = theme.fg },
