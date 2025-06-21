@@ -217,7 +217,7 @@ return {
       pyright = {
         settings = {
           python = {
-            pythonPath = vim.fn.expand("/Users/gerardo/anaconda3/envs/paces/bin/python"),
+            pythonPath = vim.fn.expand("/Users/gerardo/paces_ai/backend/.venv/bin/python"),
           },
           analysis = {
             autoSearchPaths = true,
@@ -246,7 +246,12 @@ return {
             zig_lib_path = vim.fn.expand('/opt/homebrew/Cellar/zig/0.14.0/lib/zig'),
           }
         }
-      }
+      },
+      tinymist = {
+        settings = {
+          exportPdf = "onType", -- Export PDF on every keystroke
+        },
+      },
     }
 
 
@@ -307,9 +312,9 @@ return {
     vim.api.nvim_create_autocmd("FileType", {
       pattern = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
       callback = function()
-        vim.opt_local.shiftwidth = 2
-        vim.opt_local.tabstop = 2
-        vim.opt_local.softtabstop = 2
+        vim.opt_local.shiftwidth = 4
+        vim.opt_local.tabstop = 4
+        vim.opt_local.softtabstop = 4
         vim.opt_local.expandtab = true
       end,
     })

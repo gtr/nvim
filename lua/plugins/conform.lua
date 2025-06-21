@@ -5,6 +5,7 @@ return {
       formatters_by_ft = {
         python = { "ruff_format", "ruff_fix" },
         markdown = { "prettier" },
+        tex = { "latexindent" },
       },
       formatters = {
         ruff_fix = {

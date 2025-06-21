@@ -56,7 +56,7 @@ vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', { silent = true, noremap = true })
 vim.keymap.set('n', '<leader>f', '<cmd> :set textwidth=120 <CR> ggVGgq')
 
 -- Go to defintion in new vsplit
-vim.api.nvim_set_keymap('n', 'gdv', '<cmd>vsplit | lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'gdv', '<cmd>vsplit | lua vim.lsp.buf.definition()<CR>zz', { noremap = true, silent = true })
 
 -- Copy relative file path to system clipboard
 vim.keymap.set('n', '<leader>yr', function()
@@ -84,3 +84,22 @@ vim.keymap.set('n', 'S', '"_S', { noremap = true })
 
 -- Make all windows equal size
 vim.keymap.set('n', '<leader>we', '<C-w>=', { noremap = true, desc = 'Make all windows equal size' })
+
+-- Yank the whole file
+vim.keymap.set('n', '<leader>ya', 'ggVGy', { noremap = true, desc = 'Yank the whole file' })
+
+vim.g.vimtex_mappings_prefix = '<leader>'
+
+-- Yank diagnostics message under the current line
+vim.keymap.set('n', '<leader>yd', function()
+  local diagnostics = vim.diagnostic.get(0)
+  local line = vim.fn.line('.')
+  for _, d in ipairs(diagnostics) do
+    if d.lnum == line - 1 then -- 0-indexed to 1-indexed conversion
+      vim.fn.setreg('+', d.message)
+      print("Yanked diagnostic: " .. d.message)
+      return
+    end
+  end
+  print("No diagnostic found on current line")
+end, { desc = "Yank diagnostic message" })

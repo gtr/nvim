@@ -30,4 +30,8 @@ require("lazy").setup({
   require("plugins.other"),
   require("plugins.noice"),
   require("plugins.oil"),
+  require("plugins.typst"),
+  require("plugins.latex"),
+  require("plugins.markdown-preview"),
+  require("custom.todo").setup()
 })

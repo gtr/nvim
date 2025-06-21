@@ -30,7 +30,7 @@ return {
           end,
           settings = {
             python = {
-              pythonPath = vim.fn.expand("/Users/gerardo/anaconda3/envs/paces/bin/python"),
+              pythonPath = vim.fn.expand("/Users/gerardo/paces_ai/backend/.venv/bin/python"),
             },
             analysis = {
               autoSearchPaths = true,

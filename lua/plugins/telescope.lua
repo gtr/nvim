@@ -114,6 +114,8 @@ return {
     vim.keymap.set('n', '<leader>/', function()
       builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
         winblend = 10,
+        width = 100,
+        height = 25,
         previewer = false,
         borderchars = {
           "─", "│", "─", "│", "┌", "┐", "┘", "└"

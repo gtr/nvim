@@ -139,6 +139,7 @@ function M.setup(opts)
     ['@markup.list.markdown'] = { fg = theme.green },
     ['@label.markdown'] = { fg = theme.comment },
     ['@punctuation.special.markdown'] = { fg = theme.comment },
+    ['@markup.list.checked.markdown'] = { fg = theme.lavender },
 
     -- Zig
     ['@constant.builtin.zig'] = { fg = theme.lavender },
@@ -175,6 +176,9 @@ function M.setup(opts)
     -- Borders
     WinSeparator = { fg = theme.comment },
     VertSplit = { fg = theme.comment },
+
+    -- TypeScript :|
+    ['@tag.builtin.tsx'] = { fg = theme.lavender }
   }
 
   -- Apply highlights

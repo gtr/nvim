@@ -4,15 +4,21 @@ return {
   dependencies = { { "echasnovski/mini.icons", opts = {} } },
   lazy = false,
   config = function()
+    local width = math.floor(vim.o.columns * 0.35)
+    local height = math.floor(vim.o.lines * 0.40)
     require("oil").setup({
       float = {
         enable = true,
-        max_width = 80,
-        max_height = 20,
-        border = "rounded",
+        max_width = width,
+        max_height = height,
+        border = "single",
         win_options = {
-          winblend = 50,
+          winblend = 30,
         },
+      },
+
+      keymaps = {
+        ["<C-v>"] = "actions.select_vsplit",
       },
 
       -- Disable confirmation prompts (yep)
