@@ -40,7 +40,7 @@ return {
       },
       pickers = {
         find_files = {
-          file_ignore_patterns = { 'node_modules', '.git', '.venv', 'backend/data', 'etl/data', 'etl/debug', 'uploads', 'search/data', 'search/data-old', 'backend/staticfiles' },
+          file_ignore_patterns = { 'node_modules', '.git', '.venv', 'backend/data', 'etl/data', 'etl/debug', 'uploads', 'search/data', 'search/data-old', 'backend/staticfiles', 'frontend/src/assets' },
           hidden = true,
           path_display = function(opts, path)
             local tail = require("telescope.utils").path_tail(path)
