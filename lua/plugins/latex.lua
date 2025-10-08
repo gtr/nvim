@@ -4,9 +4,9 @@ return {
     lazy = false,
     init = function()
       -- VimTeX configuration
-      vim.g.vimtex_view_method = 'skim'
+      vim.g.vimtex_view_method = "skim"
       vim.g.vimtex_quickfix_mode = 0
-      vim.g.tex_flavor = 'latex'
+      vim.g.tex_flavor = "latex"
     end,
   },
 
@@ -14,19 +14,19 @@ return {
   {
     "jakewvincent/texmagic.nvim",
     config = function()
-      require('texmagic').setup({
+      require("texmagic").setup({
         engines = {
           pdflatex = {
             executable = "pdflatex",
             args = {
               "-interaction=nonstopmode",
               "-synctex=1",
-              "%f"
+              "%f",
             },
-            isContinuous = false
+            isContinuous = false,
           },
-        }
+        },
       })
-    end
+    end,
   },
 }

@@ -3,11 +3,15 @@ return {
     "stevearc/conform.nvim",
     opts = {
       formatters_by_ft = {
+        lua = { "stylua" },
         python = { "ruff_format", "ruff_fix" },
         markdown = { "prettier" },
         tex = { "latexindent" },
       },
       formatters = {
+        stylua = {
+          prepend_args = { "--indent-type", "Spaces", "--indent-width", "2" },
+        },
         ruff_fix = {
           command = "ruff",
           args = { "check", "--fix", "-e", "-n", "--stdin-filename", "$FILENAME", "-" },

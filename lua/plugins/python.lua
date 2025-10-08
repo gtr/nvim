@@ -2,7 +2,7 @@ local ruff_root = vim.fn.getcwd() -- Gets directory where nvim was launched
 
 return {
   {
-    'neovim/nvim-lspconfig',
+    "neovim/nvim-lspconfig",
     opts = {
       servers = {
         pyright = {
@@ -15,7 +15,7 @@ return {
               group = augroup,
               buffer = bufnr,
               callback = function()
-                vim.diagnostic.disable(bufnr)
+                vim.diagnostic.enable(false)
               end,
             })
 
@@ -29,9 +29,6 @@ return {
             })
           end,
           settings = {
-            python = {
-              pythonPath = vim.fn.expand("/Users/gerardo/paces_ai/backend/.venv/bin/python"),
-            },
             analysis = {
               autoSearchPaths = true,
               useLibraryCodeForTypes = true,
@@ -41,7 +38,7 @@ return {
         },
         ruff = {
           on_attach = function(client, bufnr)
-            print('Ruff attached from: ' .. ruff_root)
+            print("Ruff attached from: " .. ruff_root)
           end,
           root_dir = function()
             return ruff_root
@@ -49,7 +46,7 @@ return {
           settings = {
             ruff = {
               -- Only specify where to find the config file
-              configPath = vim.fn.getcwd() .. '/ruff.toml',
+              configPath = vim.fn.getcwd() .. "/ruff.toml",
             },
           },
         },

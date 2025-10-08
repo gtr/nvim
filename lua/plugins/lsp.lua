@@ -16,7 +16,7 @@ return {
 
     -- Useful status updates for LSP.
     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-    { "j-hui/fidget.nvim",       opts = {} },
+    { "j-hui/fidget.nvim", opts = {} },
 
     -- Allows extra capabilities provided by nvim-cmp
     "hrsh7th/cmp-nvim-lsp",
@@ -118,7 +118,7 @@ return {
           group = insert_mode_augroup,
           buffer = event.buf,
           callback = function()
-            vim.diagnostic.disable(event.buf)
+            vim.diagnostic.enable(false)
           end,
         })
 
@@ -127,7 +127,7 @@ return {
           group = insert_mode_augroup,
           buffer = event.buf,
           callback = function()
-            vim.diagnostic.enable(event.buf)
+            vim.diagnostic.enable(false)
           end,
         })
 
@@ -216,9 +216,6 @@ return {
       yamlls = {},
       pyright = {
         settings = {
-          python = {
-            pythonPath = vim.fn.expand("/Users/gerardo/paces_ai/backend/.venv/bin/python"),
-          },
           analysis = {
             autoSearchPaths = true,
             useLibraryCodeForTypes = true,
@@ -232,10 +229,9 @@ return {
             completion = {
               callSnippet = "Replace",
             },
-            diagnostics = { disable = { 'missing-fields', 'undefined-global' } },
+            diagnostics = { disable = { "missing-fields", "undefined-global" } },
             format = {
-              indentStyle = 'space',
-              indentSize = 2,
+              enable = false,
             },
           },
         },
@@ -243,9 +239,9 @@ return {
       zls = {
         settings = {
           zls = {
-            zig_lib_path = vim.fn.expand('/opt/homebrew/Cellar/zig/0.14.0/lib/zig'),
-          }
-        }
+            zig_lib_path = vim.fn.expand("/opt/homebrew/Cellar/zig/0.14.0/lib/zig"),
+          },
+        },
       },
       tinymist = {
         settings = {
@@ -253,7 +249,6 @@ return {
         },
       },
     }
-
 
     -- Ensure the servers and tools above are installed
     --  To check the current status of installed tools and/or manually install
@@ -286,7 +281,7 @@ return {
     vim.api.nvim_create_autocmd("BufWritePost", {
       pattern = { "*.ts", "*.tsx", "*.js", "*.jsx" },
       callback = function()
-        local file_path = vim.fn.expand('%:p')
+        local file_path = vim.fn.expand("%:p")
         -- Check if the file is in the frontend directory
         if string.find(file_path, "/frontend/") then
           -- Get the frontend directory path
@@ -302,7 +297,7 @@ return {
               else
                 print("Linting failed")
               end
-            end
+            end,
           })
         end
       end,
@@ -336,7 +331,7 @@ return {
         on_exit = function(_, _)
           -- Reload the file silently to show changes
           vim.cmd("silent! edit!")
-        end
+        end,
       })
     end, {})
 
@@ -345,7 +340,7 @@ return {
       pattern = { "*.ts", "*.tsx", "*.js", "*.jsx" },
       callback = function()
         vim.cmd("Format")
-      end
+      end,
     })
 
     -- Map leader+f to format manually
