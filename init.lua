@@ -13,6 +13,14 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+if vim.fn.getenv("KITTY_WINDOW_ID") == nil and vim.fn.executable("kitty") == 1 then
+  local window_id = vim.fn.system("kitty @ ls | head -n1 | cut -d: -f1")
+  window_id = vim.trim(window_id)
+  if window_id ~= "" then
+    vim.env.KITTY_WINDOW_ID = window_id
+  end
+end
+
 require("lazy").setup({
   require("plugins.gitsigns"),
   require("plugins.autocomplete"),
@@ -33,5 +41,5 @@ require("lazy").setup({
   require("plugins.typst"),
   require("plugins.latex"),
   require("plugins.markdown-preview"),
-  require("custom.todo").setup()
+  require("custom.todo").setup(),
 })
