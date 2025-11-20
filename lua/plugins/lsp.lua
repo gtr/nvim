@@ -229,7 +229,11 @@ return {
             completion = {
               callSnippet = "Replace",
             },
-            diagnostics = { disable = { "missing-fields", "undefined-global" } },
+            diagnostics = { globals = { "vim" }, disable = { "missing-fields", "undefined-global" } },
+            workspace = {
+              library = vim.api.nvim_get_runtime_file("", true),
+              checkThirdParty = false,
+            },
             format = {
               enable = false,
             },

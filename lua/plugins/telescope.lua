@@ -18,15 +18,18 @@ return {
   config = function()
     require("telescope").setup({
       defaults = {
-        borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-        layout_strategy = "horizontal",
+        borderchars = {
+          prompt = { "─", "│", "─", "│", "│", " ", "─", "└" },
+          results = { "─", "│", "─", "│", "┌", "─", "─", "│" },
+          preview = { "─", "│", "─", "│", "┬", "┐", "┘", "┴" },
+        },
+        -- layout_strategy = "horizontal",
         layout_config = {
           horizontal = {
-            prompt_position = "top",
-            preview_width = 0.55,
+            prompt_position = "bottom",
           },
-          width = { padding = 0 },
-          height = { padding = 0 },
+          width = { padding = 10 },
+          height = { padding = 2 },
           preview_cutoff = 120,
         },
         mappings = {

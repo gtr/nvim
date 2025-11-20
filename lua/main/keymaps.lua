@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 -- Set leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -26,20 +27,16 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", opts)
 vim.keymap.set("n", "n", "nzzzv", opts)
 vim.keymap.set("n", "N", "Nzzzv", opts)
 
--- Toggle RZA theme
-vim.keymap.set("n", "<leader>tv", require("main.rza").toggle, { desc = "Toggle color variant" })
-
 -- Write a new line
 vim.keymap.set("n", "<C-m>", "A<Enter>", opts)
--- vim.keymap.set("n", "<C-CR>", "A<Enter>", opts)
 
--- Split navigation using CTRL + hjkl
+-- Split navigation using CTRL + h/j/k/l
 vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Move to above split" })
 vim.keymap.set("n", "<C-j", "<C-w>j", { desc = "Move to below split" })
 vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Move to left split" })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right split" })
 vim.keymap.set("i", "<C-k>", "<C-w>k", { desc = "Move to above split" })
-vim.keymap.set("i", "<C-j", "<C-w>j", { desc = "Move to below split" })
+vim.keymap.set("i", "<C-j>", "<C-w>j", { desc = "Move to below split" })
 vim.keymap.set("i", "<C-h>", "<C-w>h", { desc = "Move to left split" })
 vim.keymap.set("i", "<C-l>", "<C-w>l", { desc = "Move to right split" })
 
@@ -48,8 +45,8 @@ vim.keymap.set("n", "<M-]>", "<cmd>vertical resize +2<CR>", { desc = "Increase w
 vim.keymap.set("n", "<M-[>", "<cmd>vertical resize -2<CR>", { desc = "Decrease width" })
 
 -- Swap lines
-vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { silent = true, noremap = true })
-vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { silent = true, noremap = true })
+vim.keymap.set("n", "<C-A-j>", ":m .+1<CR>==", { silent = true, noremap = true })
+vim.keymap.set("n", "<C-A-k>", ":m .-2<CR>==", { silent = true, noremap = true })
 
 -- Format line width to 120 characters
 vim.keymap.set("n", "<leader>f", "<cmd> :set textwidth=120 <CR> ggVGgq")
@@ -61,6 +58,8 @@ vim.api.nvim_set_keymap(
   "<cmd>vsplit | lua vim.lsp.buf.definition()<CR>zz",
   { noremap = true, silent = true }
 )
+
+vim.keymap.set("n", "<leader>cs", "<cmd> :colo murphy_plus <CR>")
 
 -- Copy relative file path to system clipboard
 vim.keymap.set("n", "<leader>yr", function()
