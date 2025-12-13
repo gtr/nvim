@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 -- Copied almost verbatim from KickStarter. Shoutout to those lads. Top class.
 return {
   -- Main LSP Configuration
@@ -47,10 +48,9 @@ return {
     -- If you're wondering about lsp vs treesitter, you can check out the wonderfully
     -- and elegantly composed help section, `:help lsp-vs-treesitter`
 
-    --  This function gets run when an LSP attaches to a particular buffer.
-    --    That is to say, every time a new file is opened that is associated with
-    --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
-    --    function will be executed to configure the current buffer
+    -- ============================================================================
+    -- SECTION 1: FileType-specific indentation settings
+    -- ============================================================================
     vim.api.nvim_create_autocmd("FileType", {
       pattern = "lua",
       callback = function()
@@ -60,6 +60,49 @@ return {
         vim.opt_local.expandtab = true
       end,
     })
+
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+      callback = function()
+        vim.opt_local.shiftwidth = 4
+        vim.opt_local.tabstop = 4
+        vim.opt_local.softtabstop = 4
+        vim.opt_local.expandtab = true
+      end,
+    })
+
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "markdown",
+      callback = function()
+        vim.opt_local.textwidth = 120
+      end,
+    })
+
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "zig",
+      callback = function()
+        vim.opt_local.shiftwidth = 4
+        vim.opt_local.tabstop = 4
+        vim.opt_local.softtabstop = 4
+        vim.opt_local.expandtab = true
+        vim.opt_local.textwidth = 120
+
+        vim.api.nvim_create_autocmd("BufWritePre", {
+          buffer = 0,
+          callback = function()
+            vim.lsp.buf.format({ async = false })
+          end,
+        })
+      end,
+    })
+
+    -- ============================================================================
+    -- SECTION 2: LspAttach autocmd (keymaps and highlighting)
+    -- ============================================================================
+    --  This function gets run when an LSP attaches to a particular buffer.
+    --    That is to say, every time a new file is opened that is associated with
+    --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
+    --    function will be executed to configure the current buffer
     vim.api.nvim_create_autocmd("LspAttach", {
       group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
       callback = function(event)
@@ -137,7 +180,7 @@ return {
         --
         -- When you move your cursor, the highlights will be cleared (the second autocommand).
         local client = vim.lsp.get_client_by_id(event.data.client_id)
-        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+        if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
           local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
           vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
             buffer = event.buf,
@@ -149,14 +192,6 @@ return {
             buffer = event.buf,
             group = highlight_augroup,
             callback = vim.lsp.buf.clear_references,
-          })
-
-          -- For markdown-specific settings, using Lua syntax
-          vim.api.nvim_create_autocmd("FileType", {
-            pattern = "markdown",
-            callback = function()
-              vim.opt_local.textwidth = 120
-            end,
           })
 
           vim.api.nvim_create_autocmd("LspDetach", {
@@ -174,13 +209,17 @@ return {
         -- code, if the language server you are using supports them
         --
         -- This may be unwanted, since they displace some of your code
-        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+        if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
           map("<leader>th", function()
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
           end, "[T]oggle Inlay [H]ints")
         end
       end,
     })
+
+    -- ============================================================================
+    -- SECTION 3: LSP capabilities setup
+    -- ============================================================================
     -- LSP servers and clients are able to communicate to each other what features they support.
     --  By default, Neovim doesn't support everything that is in the LSP specification.
     --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
@@ -188,6 +227,9 @@ return {
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
+    -- ============================================================================
+    -- SECTION 4: LSP server configurations
+    -- ============================================================================
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
     --
@@ -215,11 +257,22 @@ return {
       jsonls = {},
       yamlls = {},
       pyright = {
+        before_init = function(_, config)
+          -- look for a .venv starting at the project root
+          local venv = vim.fs.find(".venv", { upward = true, type = "directory" })[1]
+          if venv then
+            config.settings = config.settings or {}
+            config.settings.python = config.settings.python or {}
+            config.settings.python.pythonPath = venv .. "/bin/python"
+          end
+        end,
         settings = {
-          analysis = {
-            autoSearchPaths = true,
-            useLibraryCodeForTypes = true,
-            diagnosticMode = "workspace",
+          python = {
+            analysis = {
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+              diagnosticMode = "openFilesOnly", -- matches what LspInfo shows
+            },
           },
         },
       },
@@ -254,6 +307,9 @@ return {
       },
     }
 
+    -- ============================================================================
+    -- SECTION 5: Mason setup and tool installation
+    -- ============================================================================
     -- Ensure the servers and tools above are installed
     --  To check the current status of installed tools and/or manually install
     --  other tools, you can run
@@ -275,6 +331,24 @@ return {
       "zls",
     })
     require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
+
+    require("mason-lspconfig").setup({
+      handlers = {
+        function(server_name)
+          local server = servers[server_name] or {}
+          -- This handles overriding only values explicitly passed
+          -- by the server configuration above. Useful when disabling
+          -- certain features of an LSP (for example, turning off formatting for tsserver)
+          server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+          require("lspconfig")[server_name].setup(server)
+        end,
+      },
+    })
+
+    -- ============================================================================
+    -- SECTION 6: TypeScript/JavaScript formatting and linting
+    -- ============================================================================
+    -- Format on save for TS/JS files
     vim.api.nvim_create_autocmd("BufWritePre", {
       pattern = { "*.ts", "*.tsx", "*.js", "*.jsx" },
       callback = function()
@@ -282,6 +356,7 @@ return {
       end,
     })
 
+    -- Lint after save for frontend files
     vim.api.nvim_create_autocmd("BufWritePost", {
       pattern = { "*.ts", "*.tsx", "*.js", "*.jsx" },
       callback = function()
@@ -304,17 +379,6 @@ return {
             end,
           })
         end
-      end,
-    })
-
-    -- Set default indentation for TypeScript/JavaScript files
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
-      callback = function()
-        vim.opt_local.shiftwidth = 4
-        vim.opt_local.tabstop = 4
-        vim.opt_local.softtabstop = 4
-        vim.opt_local.expandtab = true
       end,
     })
 
@@ -349,36 +413,5 @@ return {
 
     -- Map leader+f to format manually
     vim.keymap.set("n", "<leader>f", ":Format<CR>", { noremap = true, silent = true })
-
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = "zig",
-      callback = function()
-        vim.opt_local.shiftwidth = 4
-        vim.opt_local.tabstop = 4
-        vim.opt_local.softtabstop = 4
-        vim.opt_local.expandtab = true
-        vim.opt_local.textwidth = 120
-
-        vim.api.nvim_create_autocmd("BufWritePre", {
-          buffer = 0,
-          callback = function()
-            vim.lsp.buf.format({ async = false })
-          end,
-        })
-      end,
-    })
-
-    require("mason-lspconfig").setup({
-      handlers = {
-        function(server_name)
-          local server = servers[server_name] or {}
-          -- This handles overriding only values explicitly passed
-          -- by the server configuration above. Useful when disabling
-          -- certain features of an LSP (for example, turning off formatting for tsserver)
-          server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-          require("lspconfig")[server_name].setup(server)
-        end,
-      },
-    })
   end,
 }

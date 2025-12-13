@@ -1,5 +1,5 @@
 return {
-  'stevearc/oil.nvim',
+  "stevearc/oil.nvim",
   opts = {},
   dependencies = { { "echasnovski/mini.icons", opts = {} } },
   lazy = false,
@@ -13,7 +13,7 @@ return {
         max_height = height,
         border = "single",
         win_options = {
-          winblend = 30,
+          winblend = 0,
         },
       },
 

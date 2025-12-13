@@ -12,8 +12,9 @@ vim.diagnostic.config({
       return code .. diagnostic.message
     end,
   },
-  underline = false,
-  update_in_insert = true,
+  underline = true,
+  signs = true,
+  update_in_insert = false,
   float = {
     source = "always",
   },
@@ -26,7 +27,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   group = yank_group,
   pattern = "*",
   callback = function()
-    vim.highlight.on_yank({
+    vim.hl.on_yank({
       higroup = "Visual",
       timeout = 200,
     })

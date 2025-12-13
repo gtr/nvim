@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 return {
   "nvim-telescope/telescope.nvim",
   event = "VimEnter",
@@ -16,21 +17,19 @@ return {
     { "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
   },
   config = function()
+    local box = { "─", "│", "─", "│", "┌", "┐", "┘", "└" }
     require("telescope").setup({
       defaults = {
+        layout_strategy = "horizontal",
         borderchars = {
-          prompt = { "─", "│", "─", "│", "│", " ", "─", "└" },
-          results = { "─", "│", "─", "│", "┌", "─", "─", "│" },
-          preview = { "─", "│", "─", "│", "┬", "┐", "┘", "┴" },
+          prompt = box,
+          results = box,
+          preview = box,
         },
-        -- layout_strategy = "horizontal",
+
         layout_config = {
-          horizontal = {
-            prompt_position = "bottom",
-          },
-          width = { padding = 10 },
-          height = { padding = 2 },
-          preview_cutoff = 120,
+          height = 0.65,
+          prompt_position = "bottom",
         },
         mappings = {
           i = {
@@ -49,11 +48,12 @@ return {
         },
         path_display = { "truncate" },
       },
+
       pickers = {
         find_files = {
           file_ignore_patterns = {
             "node_modules",
-            ".git",
+            "%.git",
             ".venv",
             "backend/data",
             "etl/data",
@@ -71,23 +71,23 @@ return {
             return string.format("%s (%s)", tail, path)
           end,
         },
-      },
-      live_grep = {
-        file_ignore_patterns = {
-          "node_modules",
-          ".git",
-          ".venv",
-          "backend/data",
-          "etl/data",
-          "etl/debug",
-          "uploads",
-          "search/data",
-          "search/data-old",
-          "backend/staticfiles",
+        live_grep = {
+          file_ignore_patterns = {
+            "node_modules",
+            ".git",
+            ".venv",
+            "backend/data",
+            "etl/data",
+            "etl/debug",
+            "uploads",
+            "search/data",
+            "search/data-old",
+            "backend/staticfiles",
+          },
+          additional_args = function(_)
+            return { "--hidden" }
+          end,
         },
-        additional_args = function(_)
-          return { "--hidden" }
-        end,
       },
       extensions = {
         ["ui-select"] = {

@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 require("main.keymaps")
 require("main.options")
 require("main.snippets")
@@ -12,13 +13,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-vim.diagnostic.config({
-  virtual_text = true,
-  underline = true,
-  signs = true,
-  update_in_insert = false,
-})
-
 if vim.fn.getenv("KITTY_WINDOW_ID") == nil and vim.fn.executable("kitty") == 1 then
   local window_id = vim.fn.system("kitty @ ls | head -n1 | cut -d: -f1")
   window_id = vim.trim(window_id)
@@ -28,8 +22,6 @@ if vim.fn.getenv("KITTY_WINDOW_ID") == nil and vim.fn.executable("kitty") == 1 t
 end
 
 vim.cmd.colorscheme("rza")
-
-local theme = { orange = "#ffdd8c" }
 
 require("lazy").setup({
   require("plugins.gitsigns"),

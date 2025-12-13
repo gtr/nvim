@@ -41,7 +41,35 @@ vim.opt.runtimepath:remove("/usr/share/vim/vimfiles")
 vim.opt.scrolloff = 6
 vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
-vim.wo.relativenumber = false
+vim.wo.relativenumber = true
+-- Blinking cursor shenanigans
+vim.opt.guicursor = {
+  "n-v-c:block-Cursor/lCursor-blinkon500-blinkoff500",
+  "i-ci-ve:ver25-Cursor/lCursor-blinkon500-blinkoff500",
+  "r-cr:hor20-Cursor/lCursor-blinkon500-blinkoff500",
+  "o:hor50-Cursor/lCursor-blinkon500-blinkoff500",
+}
+vim.opt.fillchars:append({
+  vert = "│",
+  horiz = "─",
+  horizup = "┴",
+  horizdown = "┬",
+  vertleft = "┤",
+  vertright = "├",
+  verthoriz = "┼",
+})
+
+vim.o.statusline = table.concat({
+  " %f",
+  "%m ",
+  "%=",
+  " %l:%c ",
+})
+
+vim.opt.fillchars:append({
+  stl = "─",
+  stlnc = "─",
+})
 
 -- Remember where we left off
 vim.api.nvim_create_autocmd("BufReadPost", {
