@@ -87,6 +87,42 @@ vim.g.vim_markdown_conceal_code_blocks = 0
 
 vim.o.laststatus = 2
 
+-- FileType-specific settings
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "lua",
+  callback = function()
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.tabstop = 2
+    vim.opt_local.softtabstop = 2
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+  callback = function()
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.tabstop = 4
+    vim.opt_local.softtabstop = 4
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.opt_local.textwidth = 120
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "zig",
+  callback = function()
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.tabstop = 4
+    vim.opt_local.softtabstop = 4
+    vim.opt_local.textwidth = 120
+  end,
+})
+
 -- Force a clean refresh after Zellij pane closes / resizes / focus changes
 do
   local timer = vim.loop.new_timer()
