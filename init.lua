@@ -21,9 +21,15 @@ if vim.fn.getenv("KITTY_WINDOW_ID") == nil and vim.fn.executable("kitty") == 1 t
   end
 end
 
-vim.cmd.colorscheme("rza")
-
 require("lazy").setup({
+  {
+    dir = "~/gtr/rza",
+    name = "rza",
+    priority = 1000, -- load before other plugins
+    config = function()
+      vim.cmd.colorscheme("rza")
+    end,
+  },
   require("plugins.gitsigns"),
   require("plugins.autocomplete"),
   require("plugins.barbecue"),
